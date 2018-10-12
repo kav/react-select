@@ -664,8 +664,14 @@ class Select extends React.Component {
 	}
 
 	removeValue (value) {
-		let valueArray = this.getValueArray(this.props.value);
-		this.setValue(valueArray.filter(i => i[this.props.valueKey] !== value[this.props.valueKey]));
+		let valueArray = this.getValueArray(this.props.value).slice();
+		valueArray.reverse();
+		const index = valueArray.findIndex(i => i[this.props.valueKey] === value[this.props.valueKey]);
+		if (index > -1) {
+			valueArray.splice(index, 1);
+		}
+		valueArray.reverse();
+		this.setValue(valueArray);
 		this.focus();
 	}
 

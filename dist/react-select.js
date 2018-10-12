@@ -1346,10 +1346,16 @@ var Select$1 = function (_React$Component) {
 		value: function removeValue(value) {
 			var _this4 = this;
 
-			var valueArray = this.getValueArray(this.props.value);
-			this.setValue(valueArray.filter(function (i) {
-				return i[_this4.props.valueKey] !== value[_this4.props.valueKey];
-			}));
+			var valueArray = this.getValueArray(this.props.value).slice();
+			valueArray.reverse();
+			var index = valueArray.findIndex(function (i) {
+				return i[_this4.props.valueKey] === value[_this4.props.valueKey];
+			});
+			if (index > -1) {
+				valueArray.splice(index, 1);
+			}
+			valueArray.reverse();
+			this.setValue(valueArray);
 			this.focus();
 		}
 	}, {
